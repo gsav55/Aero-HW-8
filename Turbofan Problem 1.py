@@ -29,9 +29,6 @@ nf=0.92
 nfn=0.98
 rf=2.0
 
-#prints the data at the following Beta Value
-data = 3
-
 Mlist = []
 Ilist = []
 TSFClist = []
@@ -42,10 +39,13 @@ Blist = []
 
 #Flow Conditions
 Toa = Ta*(1 + ((gamma1-1)/2)*M**2)
+print 'Toa '
 print Toa
 Poa = Pa*(1 + ((gamma1-1)/2)*M**2)**(gamma1/(gamma1-1))
+print 'Poa '
 print Poa
 u = M*math.sqrt(gamma1*R*Ta) 
+print 'u '
 print u
 
 #Inlet/Diffuser
@@ -81,7 +81,7 @@ Po4=rc*Po2
 print 'Fb '
 print Fb
 
-for B in np.arange(0,10,0.1):
+for B in np.arange(6,10.2,0.1):
 
     #Fan
     Po8=rf*Po2
@@ -113,9 +113,11 @@ for B in np.arange(0,10,0.1):
     M9=math.sqrt(((To9/T9)-1)*(2/(gamma1-1)))
     u9 = M9*math.sqrt(gamma1*R*T9)
 
-    if B == data:
+    if B == B:
         #Fan Data
         #Turbine Data
+        print '--------B--------'
+        print B
         print 'To5 '
         print To5
         print 'To5s '
@@ -145,12 +147,17 @@ for B in np.arange(0,10,0.1):
 		
     I = B*(u9-u)+((1+Fb)*u7-u)
     TSFC = Fb/I
-    Pav=((1+Fb)*u7**2 + B*u9**2 - (B+1)*u**2)/2
+    Pav=((1+Fb)*(u7**2)/2 + B*(u9**2)/2 - (B+1)*(u**2)/2)
     Pin=Fb*hc*1000
     wp=I*u
     nth=Pav/Pin
     np=wp/Pin
     no=nth*np
+    if B == B:
+        print 'nth '
+        print nth
+        print 'Pav '
+        print Pav
 	
     Ilist.append([I])
     TSFClist.append([TSFC])
