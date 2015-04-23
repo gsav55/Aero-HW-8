@@ -77,11 +77,11 @@ Fb=(((To4/To3)-1)/((nb*hc/(Cp2*To3))-(To4/To3)))
 if Fb >= Fst:
     Fb = Fst
     To4 = (Fb*nb*hc/(Cp2)+Toa)/(1+Fb)
-Po4=rc*Po2
+Po4=rb*Po3
 print 'Fb '
 print Fb
 
-for B in np.linspace(6,10,num=40,endpoint=True):
+for B in np.linspace(0,7,num=40,endpoint=True):
 
     #Fan
     Po8=rf*Po2
@@ -93,14 +93,14 @@ for B in np.linspace(6,10,num=40,endpoint=True):
     wt_out=wc_in+wf_in
     To5=To4-(wt_out/(Cp2*(1+Fb)))
     To5s=To4-((To4-To5)/nt)
-    Po5=Po4*(To5s/To4)**(gamma2/gamma2-1)
+    Po5=Po4*(To5s/To4)**(gamma2/(gamma2-1))
         
     #Core Nozzle
     To6=To5
     To7=To6
     Po6=Po5
     P7=Pa
-    T7as=(To6/((Po6/P7)**(gamma2-1/gamma2)))
+    T7as=(To6/((Po6/P7)**((gamma2-1)/gamma2)))
     T7=To6-ncn*(To6-T7as)
     M7=math.sqrt(((To7/T7)-1)*(2/(gamma2-1)))
     u7 = M7*math.sqrt(gamma2*R*T7)
@@ -108,7 +108,7 @@ for B in np.linspace(6,10,num=40,endpoint=True):
     #Fan Nozzle
     To8=Toa
     To9=To8
-    T9as=(To8/((Po8/Pa)**(gamma1-1/gamma1)))
+    T9as=(To8/((Po8/Pa)**((gamma1-1)/gamma1)))
     T9=To8-nfn*(To8-T9as)
     M9=math.sqrt(((To9/T9)-1)*(2/(gamma1-1)))
     u9 = M9*math.sqrt(gamma1*R*T9)
@@ -118,6 +118,10 @@ for B in np.linspace(6,10,num=40,endpoint=True):
         #Turbine Data
         print '--------B--------'
         print B
+        print 'To4 '
+        print To4
+        print 'Po4 '
+        print Po4
         print 'To5 '
         print To5
         print 'To5s '
