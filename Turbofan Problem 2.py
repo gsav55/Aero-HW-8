@@ -19,7 +19,7 @@ Cp2 = (gamma2/(gamma2-1))*R/1000
 M=0.8
 Fst=0.06
 hc=43000
-B=10
+B=1
 
 #Efficiencies
 nd=0.94
@@ -32,14 +32,6 @@ ncn=0.97
 nf=0.92
 nfn=0.98
 #rf=2.0
-
-Mlist = []
-Ilist = []
-TSFClist = []
-nthlist = []
-nplist = []
-nolist = []
-Blist = []
 
 rclist = np.linspace(20.0, 28.0, num=30, endpoint=True)
 rflist = np.linspace( 1.5,  2.2, num=30, endpoint=True)
@@ -79,7 +71,7 @@ for rc in rclist:
     if Fb >= Fst:
         Fb = Fst
         To4 = (Fb*nb*hc/(Cp2)+Toa)/(1+Fb)
-    Po4=rc*Po2
+    Po4=rb*Po3
 
     for rf in rflist:
         #Fan
@@ -92,14 +84,14 @@ for rc in rclist:
         wt_out=wc_in+wf_in
         To5=To4-(wt_out/(Cp2*(1+Fb)))
         To5s=To4-((To4-To5)/nt)
-        Po5=Po4*(To5s/To4)**(gamma2/gamma2-1)
+        Po5=Po4*(To5s/To4)**(gamma2/(gamma2-1))
             
         #Core Nozzle
         To6=To5
         To7=To6
         Po6=Po5
         P7=Pa
-        T7as=(To6/((Po6/P7)**(gamma2-1/gamma2)))
+        T7as=(To6/((Po6/P7)**((gamma2-1)/gamma2)))
         T7=To6-ncn*(To6-T7as)
         M7=math.sqrt(((To7/T7)-1)*(2/(gamma2-1)))
         u7 = M7*math.sqrt(gamma2*R*T7)
@@ -107,7 +99,7 @@ for rc in rclist:
         #Fan Nozzle
         To8=Toa
         To9=To8
-        T9as=(To8/((Po8/Pa)**(gamma1-1/gamma1)))
+        T9as=(To8/((Po8/Pa)**((gamma1-1)/gamma1)))
         T9=To8-nfn*(To8-T9as)
         M9=math.sqrt(((To9/T9)-1)*(2/(gamma1-1)))
         u9 = M9*math.sqrt(gamma1*R*T9)
@@ -131,6 +123,6 @@ for rc in rclist:
         j = j+1
     i = i+1
 
-book.save('Thermal Efficiency Matrix.xls')
+book.save('Overall Efficiency Matrix.xls')
 raw_input('Press any Key to Exit')
 sys.exit(-1)
