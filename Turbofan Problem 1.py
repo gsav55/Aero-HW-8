@@ -81,7 +81,7 @@ Po4=rc*Po2
 print 'Fb '
 print Fb
 
-for B in np.arange(6,10.2,0.1):
+for B in np.linspace(6,10,num=40,endpoint=True):
 
     #Fan
     Po8=rf*Po2
@@ -113,7 +113,7 @@ for B in np.arange(6,10.2,0.1):
     M9=math.sqrt(((To9/T9)-1)*(2/(gamma1-1)))
     u9 = M9*math.sqrt(gamma1*R*T9)
 
-    if B == B:
+    if B == 10:
         #Fan Data
         #Turbine Data
         print '--------B--------'
